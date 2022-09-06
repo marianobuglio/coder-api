@@ -3,18 +3,16 @@ const router = express.Router()
 let productos = [{title:"Producto 1",price:10,id:0}]
 router.get("/",(req,res)=>{
     if(productos.length <= 0 ){
-        return res.send("No hay productos")
+        return res.send({error:"No hay productos"})
     }
     res.send(productos)
 })
 router.get("/:id",(req,res)=>{
     const id = req.params.id
     if(productos.length <= 0 ){
-        return res.send("No hay productos")
+        return res.send({error:"No hay productos"})
     }
-    console.log(id)
     const existe = productos.map(p => p.id).indexOf(parseInt(id))
-    console.log(existe)
     if(existe == -1){
        return res.send("No existe producto con ese id")
     }
@@ -26,11 +24,11 @@ router.put("/:id",(req,res)=>{
     const id = req.params.id
     const producto = req.body
     if(productos.length <= 0 ){
-        return res.send("No hay productos")
+        return res.send({error:"No hay productos"})
     }
     const existe = productos.map(p => p.id).indexOf(parseInt(id))
     if(existe == -1){
-       return res.send("No existe producto con ese id")
+       return res.send({error:"producto no encontrado"})
     }
     Object.assign(productos[existe], producto);
     res.send("Producto actualizado correctamente")
@@ -45,7 +43,7 @@ router.post("/",(req,res)=>{
 router.delete("/:id",(req,res)=>{
     const id = req.params.id
     if(productos.length <= 0 ){
-        return res.send("No hay productos")
+        return res.send({error:"No hay productos"})
     }
     const existe = productos.map(p => p.id).indexOf(parseInt(id))
     if(existe == -1){
