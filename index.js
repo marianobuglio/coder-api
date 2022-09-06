@@ -6,6 +6,11 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.static('public'))
 
 app.use('/api' , router)
-app.listen(8080, ()=> {
-    console.log("corriendo")
+
+const conn = app.listen(8080,()=>{
+    console.log(`Servidor corriendo en el puerto ${conn.address().port}`)
+})
+
+app.on("error",(error)=>{
+    console.log(`Error ${error}`)
 })
